@@ -1,0 +1,21 @@
+from dataclasses import dataclass
+from enum import St
+
+class State(StrEnum):
+    WATER = "WATER"
+    SOAP  = "SOAP"
+    BRUSH = "BRUSH"
+
+    
+@dataclass
+class Robot:
+    x: float
+    y: float
+    angle: int
+    state: RobotState
+
+def main() -> None:
+    pass
+
+if __name__ == "__main__":
+    main()

@@ -9,10 +9,10 @@ type Position = tuple[float, float]
 
 class State(StrEnum):
     WATER = "WATER"
-    SOAP  = "SOAP"
+    SOAP = "SOAP"
     BRUSH = "BRUSH"
 
-    
+
 @dataclass
 class Robot:
     position: Position
@@ -22,6 +22,7 @@ class Robot:
     def __post_init__(self) -> None:
         self.angle = self.angle % 360
 
+
 def main() -> None:
     commands = load_commands("./commands.txt")
     robot = init_robot()
@@ -29,7 +30,7 @@ def main() -> None:
 
 
 def load_commands(path: str) -> list[str]:
-    with open(path, 'r') as f:
+    with open(path, "r") as f:
         return f.readlines()
 
 
@@ -44,7 +45,7 @@ def run_program(robot: Robot, commands: list[str]) -> None:
 
 
 def parse_command(command: str) -> tuple[str, Any]:
-    parsed = command.split(' ')
+    parsed = command.split(" ")
     if len(parsed) > 2:
         raise ValueError(f"Invalid command number {parsed}")
     return tuple(map(lambda x: x.lower().strip(), parsed))
@@ -65,6 +66,7 @@ def handle_command(robot: Robot, parsed: str | tuple[str, Any]) -> None:
         case _:
             print(f"ERROR: robot has no command: {parsed}")
 
+
 def set(robot: Robot, state: State) -> None:
     robot.state = state
     print(f"STATE {robot.state}")
@@ -74,11 +76,11 @@ def move(robot: Robot, distance: float) -> None:
     angle = robot.angle
     robot.position = (
         robot.position[0] + distance * math.cos(math.radians(angle)),
-        robot.position[1] + distance * math.sin(math.radians(angle))
+        robot.position[1] + distance * math.sin(math.radians(angle)),
     )
     print(f"POS {robot.position[0]:.2f} {robot.position[1]:.2f}")
 
-    
+
 def start(robot: Robot) -> None:
     print(f"START WITH {robot.state}")
 
@@ -90,7 +92,6 @@ def stop() -> None:
 def turn(robot: Robot, angle: float) -> None:
     robot.angle += angle
 
-    
 
 if __name__ == "__main__":
     main()

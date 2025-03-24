@@ -7,10 +7,8 @@ type Transfer = Callable[[str], None]
 
 type Arg = int | float | None
 
-type RobotFunction = Callable[
-    [Transfer, Arg, pr.RobotState],
-    pr.RobotState
-]
+type RobotFunction = Callable[[Transfer, Arg, pr.RobotState], pr.RobotState]
+
 
 def call_robot_function(
     robot_fn: RobotFunction,
@@ -22,11 +20,10 @@ def call_robot_function(
         return robot_fn(transfer, state)
     return robot_fn(transfer, arg, state)
 
+
 # Выполнить серию текстовых команд
-type RobotMake = Callable[
-    [Transfer, list[str], pr.RobotState],
-    pr.RobotState
-]
+type RobotMake = Callable[[Transfer, list[str], pr.RobotState], pr.RobotState]
+
 
 def call_robot_make(
     make_fn: RobotMake,
@@ -35,7 +32,7 @@ def call_robot_make(
     state: pr.RobotState,
 ) -> pr.RobotState:
     return make_fn(transfer, code, state)
-    
+
 
 # Пример
 if __name__ == "__main__":
@@ -45,4 +42,3 @@ if __name__ == "__main__":
     state = call_robot_function(pr.set_state, pr.transfer_to_cleaner, pr.BRUSH, state)
     state = call_robot_function(pr.move, pr.transfer_to_cleaner, 10, state)
     print(state)
-    

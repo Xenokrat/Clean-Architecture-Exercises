@@ -34,7 +34,7 @@ type Transfer = Callable[[str], None]
 type Commands = list[str]
 
 def transfer_to_cleaner(message: str) -> None:
-    print(message)
+
 
 
 # API Команд

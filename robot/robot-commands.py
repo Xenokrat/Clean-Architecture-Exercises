@@ -17,14 +17,12 @@ class CommandReader:
 
     def run(self) -> list[Command]:
         self._read()
-        result = []
         for command in self._get_commands():
             parsed = command.split(" ")
             parsed = list(map(lambda x: x.lower().strip(), parsed))
             if len(parsed) > 2:
                 raise ValueError(f"Invalid command number {parsed}")
-            result.append(tuple(parsed))
-        return result
+            return parsed
 
     def _read(self) -> None:
         with open(self.path, "r") as f:

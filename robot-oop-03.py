@@ -1,4 +1,4 @@
-from typing import Self 
+from typing import Self
 from enum import StrEnum
 import math
 
@@ -10,7 +10,7 @@ class CommandReader:
         self.path = path
 
     def read(self) -> None:
-        with open(self.path, 'r') as f:
+        with open(self.path, "r") as f:
             self._str_commands = f.readlines()
 
     def get_commands(self) -> list[str]:
@@ -46,12 +46,7 @@ class RobotState(StrEnum):
 
 
 class Robot:
-    def __init__(
-        self, 
-        position: Position, 
-        state: RobotState,
-        angle: Angle
-    ) -> None:
+    def __init__(self, position: Position, state: RobotState, angle: Angle) -> None:
         self._position = position
         self._state = state
         self._angle = angle
@@ -60,7 +55,7 @@ class Robot:
         # NOTE: This is ugly af
         self._position = (
             self._position[0] + distance * math.cos(math.radians(self._angle.value())),
-            self._position[1] + distance * math.sin(math.radians(self._angle.value()))
+            self._position[1] + distance * math.sin(math.radians(self._angle.value())),
         )
         print(f"POS {self._position[0]:.2f} {self._position[1]:.2f}")
 
@@ -70,10 +65,10 @@ class Robot:
 
     def start(self) -> None:
         print(f"START WITH {self._state}")
-    
+
     def stop(self) -> None:
         print("STOP")
-    
+
     def turn(self, angle: Angle) -> None:
         self._angle += angle
         print(f"ANGLE {self._angle}")
@@ -87,7 +82,7 @@ class Handler:
     def run(self) -> None:
         self._commands.read()
         for command in self._commands.get_commands():
-            parsed = command.split(' ')
+            parsed = command.split(" ")
             parsed = list(map(lambda x: x.lower().strip(), parsed))
             if len(parsed) > 2:
                 raise ValueError(f"Invalid command number {parsed}")
@@ -98,9 +93,7 @@ class Handler:
             case ["move", number]:
                 self._robot.move(float(number))
             case ["turn", number]:
-                self._robot.turn(
-                    Angle(float(number))
-                )
+                self._robot.turn(Angle(float(number)))
             case ["set", state]:
                 self._robot.set(state.upper())
             case ["start"]:
@@ -113,9 +106,7 @@ class Handler:
 
 def main() -> None:
     commands = CommandReader("./commands.txt")
-    robot = Robot(position=(0.0, 0.0),
-                  state=RobotState.WATER,
-                  angle=Angle(0))
+    robot = Robot(position=(0.0, 0.0), state=RobotState.WATER, angle=Angle(0))
     handler = Handler(commands, robot)
     handler.run()
 

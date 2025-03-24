@@ -1,6 +1,7 @@
 """
 Класс Robot, его описание и управление
 """
+
 from enum import StrEnum
 from typing import Callable
 import math
@@ -24,7 +25,7 @@ class Robot:
     def move(self, distance: float) -> str:
         self._position = (
             self._position[0] + distance * math.cos(math.radians(self._angle.value())),
-            self._position[1] + distance * math.sin(math.radians(self._angle.value()))
+            self._position[1] + distance * math.sin(math.radians(self._angle.value())),
         )
         return f"POS {self._position[0]:.2f} {self._position[1]:.2f}"
 
@@ -34,10 +35,10 @@ class Robot:
 
     def start(self) -> str:
         return f"START WITH {self._state}"
-    
+
     def stop(self) -> str:
         return "STOP"
-    
+
     def turn(self, angle: Angle) -> str:
         self._angle += angle
         return f"ANGLE {self._angle}"
@@ -57,9 +58,8 @@ class Robot:
             case _:
                 print(f"ERROR: robot has no command: {parsed}")
 
-
-    def handle_commands(self, 
-                        list_parsed: list[Command],
-                        action: Callable[[str], None]) -> str:
+    def handle_commands(
+        self, list_parsed: list[Command], action: Callable[[str], None]
+    ) -> str:
         for p in list_parsed:
             self.handle_command(p, action)
